@@ -1,0 +1,91 @@
+[
+	{
+		"id": "pgetinker/ci",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-ci.sh",
+		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
+		"pass-environment-to-command": [
+			{
+				"source": "string",
+				"name": "/home/{{ getenv "RUNNER_USER" }}",
+				"envname": "HOME"
+			}
+		],
+		"pass-arguments-to-command": [
+			{
+				"source": "payload",
+				"name": "action"
+			},
+			{
+				"source": "payload",
+				"name": "workflow_job.id"
+			},
+			{
+				"source": "payload",
+				"name": "repository.full_name"
+			},
+			{
+				"source": "payload",
+				"name": "workflow_job.head_branch"
+			}
+		],
+		"trigger-rule": {
+			"and": [
+				{
+					"match": {
+						"type": "payload-hmac-sha1",
+						"secret": "{{ getenv "GITHUB_WEBHOOK_SECRET" }}",
+						"parameter": { "source": "header", "name": "X-Hub-Signature" }
+					}
+				},
+				{
+					"match": {
+						"type": "value", "value": "workflow_job",
+						"parameter": { "source": "header", "name": "X-GitHub-Event" }
+					}
+				},
+				{
+					"match": {
+						"type": "value", "value": "self-hosted",
+						"parameter": { "source": "payload", "name": "workflow_job.labels.0" }
+					}
+				}
+			]
+		}
+	},
+	{
+		"id": "pgetinker/update",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-update.sh",
+		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
+		"pass-environment-to-command": [
+			{
+				"source": "string",
+				"name": "/home/{{ getenv "RUNNER_USER" }}",
+				"envname": "HOME"
+			}
+		],
+		"pass-arguments-to-command": [
+			{
+				"source": "payload",
+				"name": "ref"
+			}
+		],
+		"trigger-rule": {
+			"and": [
+				{
+					"match": {
+						"type": "payload-hmac-sha1",
+						"secret": "{{ getenv "GITHUB_WEBHOOK_SECRET" }}",
+						"parameter": { "source": "header", "name": "X-Hub-Signature" }
+					}
+				},
+				{
+					"match": {
+						"type": "value", "value": "push",
+						"parameter": { "source": "header", "name": "X-GitHub-Event" }
+					}
+				}
+			]
+		}
+	}
+]
+
