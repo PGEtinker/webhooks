@@ -3,7 +3,7 @@
 source common.sh
 
 log "#### Spin up maintenance page."
-cd /home/jon/apps/pgetinker-maintenance
+cd "$APPS_BASE_DIRECTORY/pgetinker-maintenance"
 docker compose up -d
 log "## Done."
 
@@ -16,7 +16,7 @@ fi
 log "## Done."
 
 log "#### Spin down pgetinker.next."
-cd /home/jon/apps/pgetinker-next
+cd "$APPS_BASE_DIRECTORY/pgetinker-next"
 scripts/pgetinker down
 log "## Done."
 
@@ -37,6 +37,6 @@ fi
 log "## Done."
 
 log "#### Spin down maintenance page."
-cd /home/jon/apps/pgetinker-maintenance
+cd "$APPS_BASE_DIRECTORY/pgetinker-maintenance"
 docker compose down
 log "## Done."
