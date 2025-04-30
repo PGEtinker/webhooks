@@ -8,6 +8,20 @@ answer them but this is not provided as a project in and of itself.
 
 ## What does what?
 
+### Apps
+
+I refer to directories containing a docker compose project an "app".
+
+- nginx-proxy-manager: for reverse proxy and SSL terminations
+- pgetinker: https://pgetinker.com
+- pgetinker-next: https://next.pgetinker.com
+- pgetinker-maintenance: the service that runs in place of
+pgetinker or pgetinker-next when they are being updated.
+- webhooks: this repository!
+
+There are more, but none of them matter for the purposes of this
+repo.
+
 ### hooks.json
 
 This system relies on a software called webhook which can be
