@@ -53,7 +53,7 @@ This script will put the site into maintenance mode, perform the
 update, and bring the site back online. (see update-main.sh)
 
 - Develop: for the ease of development and testing, all pushes to
-the develop branch are deployed on the site https://next.pgetinekr.com.
+the develop branch are deployed on the site https://next.pgetinker.com.
 This script will put the site into maintenance mode, perform the
 update, and bring the site back online. (see update-develop.sh)
 This site is isolated from production and does not affect the state of
