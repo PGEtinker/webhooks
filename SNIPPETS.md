@@ -1,7 +1,7 @@
 # Notes and Snippets
 
 This page contains a series of notes and script snippets
-that are nice to have a round for reference or straigh-up
+that are nice to have a round for reference or straight-up
 copy/paste
 
 
