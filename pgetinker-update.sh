@@ -6,3 +6,6 @@ source common.sh
 
 if [ "$1" == "refs/heads/main" ]; then bash update-main.sh; fi
 if [ "$1" == "refs/heads/develop" ]; then bash update-develop.sh; fi
+
+# remove ansi color escape codes
+sed -i 's/\x1B\[[0-9;]*[a-zA-Z]//g' pgetinker-update.log

@@ -50,4 +50,7 @@ if [ "completed" == "$ACTION" ]; then
         rm "$ID"
     fi
     exit 0
-fi 
+fi
+
+# remove ansi color escape codes
+sed -i 's/\x1B\[[0-9;]*[a-zA-Z]//g' pgetinker-ci.log
