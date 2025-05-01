@@ -6,8 +6,6 @@ how things are accomplished on the hosting side of things, here's
 a big portion of how it's managed. If you have questions, I'll
 answer them but this is not provided as a project in and of itself.
 
-## What does what?
-
 ### Apps
 
 I refer to directories containing a docker compose project an "app".
@@ -21,6 +19,12 @@ pgetinker or pgetinker-next when they are being updated.
 
 There are more, but none of them matter for the purposes of this
 repo.
+
+For context, it is helpful to know that this server is a VM guest
+of a Proxmox host and any mention of a VM being started, stopped,
+or destroyed is in the context of the Proxmox host.
+
+## What does what?
 
 ### hooks.json
 
