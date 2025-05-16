@@ -20,6 +20,10 @@ cd "$APPS_BASE_DIRECTORY/pgetinker"
 scripts/pgetinker down
 log "## Done."
 
+log "#### Pull latest repo"
+git pull
+log "## Done."
+
 log "#### Run pgetinker updates."
 scripts/pgetinker update ci
 log "## Done."
