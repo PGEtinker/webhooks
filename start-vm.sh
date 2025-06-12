@@ -4,7 +4,7 @@ source common.sh
 
 id="$1"
 NEW_VMID="${id: -9}"
-
+NEW_VMID=$((10#${NEW_VMID}))
 
 RUNNER_TOKEN="$2"
 REPO_FULLNAME="$3"
@@ -42,6 +42,7 @@ EOF
 proxmox_ssh "echo \"$USER_DATA\" > $USER_DATA_FILE"
 
 # Create linked clone
+echo "qm clone $TEMPLATE_VMID $NEW_VMID -name ed-$NEW_VMID -full 0"
 proxmox_ssh "qm clone $TEMPLATE_VMID $NEW_VMID -name ed-$NEW_VMID -full 0"
 if [ $? -ne 0 ]; then
     proxmox_ssh "rm -f $USER_DATA_FILE"
