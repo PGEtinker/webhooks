@@ -30,11 +30,12 @@ write_files:
       ./config.sh --url "https://github.com/$REPO_FULLNAME" --token "$RUNNER_TOKEN" --name "ed-$NEW_VMID" --ephemeral --unattended
       ./run.sh
     permissions: '0755'
-
 runcmd:
-  - docker-cache-load
+  - git clone https://github.com/PGEtinker/webhooks.git /opt/webhooks
+  - cp /opt/webhooks/vm-scripts/* /usr/local/bin/
+  - chmod +x /usr/local/bin/*
+  - rm -rf /opt/webhooks
   - sudo -u $RUNNER_USER bash /start-runner.sh
-  - docker-cache-save
   - shutdown -h now
 EOF
 )
