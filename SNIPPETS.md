@@ -17,7 +17,7 @@ sudo rm -f /var/lib/dbus/machine-id
 sudo rm -f /etc/ssh/ssh_host_*
 sudo find /var/log -type f -exec truncate -s 0 {} \;
 sudo apt-get clean
-sudo rm -rf /home/$USER/.ssh/*
-sudo rm -f /home/$USER/.bash_history
+rm -rf /home/$USER/.ssh/*
+rm -f /home/$USER/.bash_history
 sudo poweroff
 ```
