@@ -1,21 +1,21 @@
 #!/usr/bin/bash
 
-SUPERUSER_COMMAND="sudo"
+SUPERUSER_COMMAND=""
 
-if [[ $EUID -e 0 ]]; then
-    SUPERUSER_COMMAND=""
+if [[ $EUID -ne 0 ]]; then
+    SUPERUSER_COMMAND="sudo"
 fi
 
 print_usage() {
-        echo "$0 <cache-key> <destination_directory"
-        echo "$0 cache-key /path/to/dest_dir"
-        exit 1
+    echo "$0 <cache-key> <destination_directory"
+    echo "$0 cache-key /path/to/dest_dir"
+    exit 1
 }
 
 echo "Cache Loader v0.1"
 
 if [ $# -lt 2 ]; then
-        print_usage
+    print_usage
 fi
 
 original_dir="$(pwd)"
@@ -24,13 +24,13 @@ source_tarball="/mnt/cache/$1.tar.gz"
 dest_dir="$2"
 
 if [ ! -d "$dest_dir" ]; then
-        echo "Error: Destination '$dest_dir' does not exist."
-        print_usage
+    echo "Error: Destination '$dest_dir' does not exist."
+    print_usage
 fi
 
 if [ ! -f "$source_tarball" ]; then
-        echo "Cache miss."
-        exit
+    echo "Cache miss."
+    exit
 fi
 
 echo "Cache hit."

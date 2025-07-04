@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-SUPERUSER_COMMAND="sudo"
+SUPERUSER_COMMAND=""
 
-if [[ $EUID -e 0 ]]; then
-    SUPERUSER_COMMAND=""
+if [[ $EUID -ne 0 ]]; then
+    SUPERUSER_COMMAND="sudo"
 fi
 
 print_usage() {
