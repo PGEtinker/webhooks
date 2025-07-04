@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+print_usage() {
+        echo "$0 <cache-key> <destination_directory"
+        echo "$0 cache-key /path/to/dest_dir"
+        exit 1
+}
+
+echo "Cache Loader v0.1"
+
+if [ $# -lt 2 ]; then
+        print_usage
+fi
+
+original_dir="$(pwd)"
+
+source_tarball="/mnt/cache/$1.tar.gz"
+dest_dir="$2"
+
+if [ ! -d "$dest_dir" ]; then
+        echo "Error: Destination '$dest_dir' does not exist."
+        print_usage
+fi
+
+if [ ! -f "$source_tarball" ]; then
+        echo "Cache miss."
+        exit
+fi
+
+echo "Cache hit."
+
+cd "$dest_dir"
+
+sudo tar -zxf "$source_tarball"
+
+cd "$original_dir"

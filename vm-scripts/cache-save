@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+
+print_usage() {
+        echo "Usage: $0 <source_directory> <cache-key>"
+        echo "Example: $0 /path/to/source_dir source_dir-cache-key"
+        exit 1
+}
+
+echo "Cache Saver v0.1"
+
+if [ $# -lt 2 ]; then
+        print_usage
+fi
+
+original_dir="$(pwd)"
+
+source_dir="$1"
+dest_path="/mnt/cache/$2.tar.gz"
+dest_file="$(basename $dest_path)"
+
+
+if [ ! -d "$source_dir" ]; then
+        echo "Error: '$source_dir' is not a valid directory."
+        print_usage
+fi
+
+parent_dir="$(dirname $source_dir)"
+base_dir="$(basename $source_dir)"
+
+cd "$parent_dir" || { echo "Error: Cannot change to parent directory"; exit 1; }
+
+# if the destination exists, remove it as it's about to be replaced.
+if [ -f "$dest_path" ]; then
+        rm -rf "$dest_path"
+fi
+
+sudo tar -zcf "$dest_file" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
+sudo chown 1000:1000 "$dest_file"
+sudo -u "#1000" -g "#1000" cp "$dest_file" "$dest_path" || { echo "Error: Failed to move archive to cache location."; exit 1; }
+sudo rm "$dest_file"
+
+cd "$original_dir"
