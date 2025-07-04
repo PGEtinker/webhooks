@@ -62,3 +62,8 @@ This script will put the site into maintenance mode, perform the
 update, and bring the site back online. (see update-develop.sh)
 This site is isolated from production and does not affect the state of
 the main site (eg: shared code, cacheing, etc).
+
+### vm-scripts
+
+These are scripts that are loaded into the action runner VM to
+facilitate some core functionality.
