@@ -1,5 +1,11 @@
 #!/usr/bin/bash
 
+SUPERUSER_COMMAND="sudo"
+
+if [[ $EUID -e 0 ]]; then
+    SUPERUSER_COMMAND=""
+fi
+
 print_usage() {
         echo "$0 <cache-key> <destination_directory"
         echo "$0 cache-key /path/to/dest_dir"
@@ -31,6 +37,6 @@ echo "Cache hit."
 
 cd "$dest_dir"
 
-sudo tar -zxf "$source_tarball"
+$SUPERUSER_COMMAND tar -zxf "$source_tarball"
 
 cd "$original_dir"
