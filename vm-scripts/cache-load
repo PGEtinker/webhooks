@@ -37,6 +37,6 @@ echo "Cache hit."
 
 cd "$dest_dir"
 
-$SUPERUSER_COMMAND tar -xf -I pigz "$source_tarball"
+$SUPERUSER_COMMAND tar -xf "$source_tarball"
 
 cd "$original_dir"
