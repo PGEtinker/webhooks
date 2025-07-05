@@ -37,10 +37,12 @@ cd "$parent_dir" || { echo "Error: Cannot change to parent directory"; exit 1; }
 
 # if the destination exists, remove it as it's about to be replaced.
 if [ -f "$dest_path" ]; then
-    rm -rf "$dest_path"
+    $SUPERUSER_COMMAND rm -rf "$dest_path"
 fi
 
-$SUPERUSER_COMMAND tar -zcf "$dest_file" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
-$SUPERUSER_COMMAND mv "$dest_file" "$dest_path" || { echo "Error: Failed to move archive to cache location."; exit 1; }
+# $SUPERUSER_COMMAND tar -zcf "$dest_file" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
+# $SUPERUSER_COMMAND mv "$dest_file" "$dest_path" || { echo "Error: Failed to move archive to cache location."; exit 1; }
+
+$SUPERUSER_COMMAND tar -zcf "$dest_path" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
 
 cd "$original_dir"
