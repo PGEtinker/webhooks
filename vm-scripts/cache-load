@@ -7,8 +7,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 print_usage() {
-    echo "$0 <cache-key> <destination_directory"
-    echo "$0 cache-key /path/to/dest_dir"
+    echo "Usage: $0 <cache-key> <destination_directory"
+    echo "Example: $0 cache-key /path/to/dest_dir"
     exit 1
 }
 
