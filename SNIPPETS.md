@@ -21,3 +21,13 @@ rm -rf /home/$USER/.ssh/*
 rm -f /home/$USER/.bash_history
 sudo poweroff
 ```
+
+## Network Settings
+
+```bash
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: yes
+```
