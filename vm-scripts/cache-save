@@ -19,9 +19,9 @@ if [ $# -lt 2 ]; then
 fi
 
 original_dir="$(pwd)"
-
 source_dir="$1"
 dest_path="/mnt/cache/$2.tar"
+checksum_file="/mnt/cache/$2.md5"
 dest_file="$(basename $dest_path)"
 
 if [ ! -d "$source_dir" ]; then
@@ -34,11 +34,33 @@ base_dir="$(basename $source_dir)"
 
 cd "$parent_dir" || { echo "Error: Cannot change to parent directory"; exit 1; }
 
-# if the destination exists, remove it as it's about to be replaced.
+# Generate current checksum of the directory
+current_checksum=$(find "$base_dir" -type f -exec md5sum {} \; | sort | md5sum | awk '{print $1}')
+
+# Check if previous checksum exists and compare
+if [ -f "$checksum_file" ]; then
+    stored_checksum=$(cat "$checksum_file" | md5sum | awk '{print $1}')
+    if [ "$current_checksum" = "$stored_checksum" ]; then
+        echo "No changes detected in directory '$source_dir'. Skipping archive creation."
+        cd "$original_dir"
+        exit 0
+    else
+        echo "Changes detected in directory '$source_dir'. Creating new archive."
+    fi
+else
+    echo "No previous checksum found. Creating new archive."
+fi
+
+# If we reach here, either the checksums differ or no previous checksum exists
+# Remove existing archive if it exists
 if [ -f "$dest_path" ]; then
     $SUPERUSER_COMMAND rm -rf "$dest_path"
 fi
 
+# Create new archive
 $SUPERUSER_COMMAND tar -cf "$dest_path" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
+
+# Store new checksum
+echo "$current_checksum" > "$checksum_file"
 
 cd "$original_dir"

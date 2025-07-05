@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 print_usage() {
-    echo "Usage: $0 <cache-key> <destination_directory"
+    echo "Usage: $0 <cache-key> <destination_directory>"
     echo "Example: $0 cache-key /path/to/dest_dir"
     exit 1
 }
@@ -19,8 +19,8 @@ if [ $# -lt 2 ]; then
 fi
 
 original_dir="$(pwd)"
-
 source_tarball="/mnt/cache/$1.tar"
+checksum_file="/mnt/cache/$1.md5"
 dest_dir="$2"
 
 if [ ! -d "$dest_dir" ]; then
@@ -36,7 +36,9 @@ fi
 echo "Cache hit."
 
 cd "$dest_dir"
-
 $SUPERUSER_COMMAND tar -xf "$source_tarball"
+
+# Generate checksum of extracted directory contents
+find . -type f -exec md5sum {} \; | sort > "$checksum_file"
 
 cd "$original_dir"
