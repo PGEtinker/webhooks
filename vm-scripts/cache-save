@@ -35,11 +35,11 @@ base_dir="$(basename $source_dir)"
 cd "$parent_dir" || { echo "Error: Cannot change to parent directory"; exit 1; }
 
 # Generate current checksum of the directory
-current_checksum=$(find "$base_dir" -type f -exec md5sum {} \; | sort | md5sum | awk '{print $1}')
+current_checksum=$(find "$base_dir" -type f -printf "%p %s %T@\n" | sort | sha256sum | awk '{print $1}')
 
 # Check if previous checksum exists and compare
 if [ -f "$checksum_file" ]; then
-    stored_checksum=$(cat "$checksum_file" | md5sum | awk '{print $1}')
+    stored_checksum=$(cat "$checksum_file" | awk '{print $1}')
     if [ "$current_checksum" = "$stored_checksum" ]; then
         echo "No changes detected in directory '$source_dir'. Skipping archive creation."
         cd "$original_dir"
