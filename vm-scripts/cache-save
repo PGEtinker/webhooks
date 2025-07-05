@@ -43,6 +43,6 @@ fi
 # $SUPERUSER_COMMAND tar -zcf "$dest_file" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
 # $SUPERUSER_COMMAND mv "$dest_file" "$dest_path" || { echo "Error: Failed to move archive to cache location."; exit 1; }
 
-$SUPERUSER_COMMAND tar -zcf "$dest_path" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
+$SUPERUSER_COMMAND tar -zcf -I pigz "$dest_path" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
 
 cd "$original_dir"
