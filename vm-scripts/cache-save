@@ -24,7 +24,6 @@ source_dir="$1"
 dest_path="/mnt/cache/$2.tar"
 dest_file="$(basename $dest_path)"
 
-
 if [ ! -d "$source_dir" ]; then
     echo "Error: '$source_dir' is not a valid directory."
     print_usage
@@ -39,9 +38,6 @@ cd "$parent_dir" || { echo "Error: Cannot change to parent directory"; exit 1; }
 if [ -f "$dest_path" ]; then
     $SUPERUSER_COMMAND rm -rf "$dest_path"
 fi
-
-# $SUPERUSER_COMMAND tar -zcf "$dest_file" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
-# $SUPERUSER_COMMAND mv "$dest_file" "$dest_path" || { echo "Error: Failed to move archive to cache location."; exit 1; }
 
 $SUPERUSER_COMMAND tar -cf "$dest_path" --preserve-permissions "$base_dir" || { echo "Error: Failed to create cache archive."; exit 1; }
 
