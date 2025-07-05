@@ -20,7 +20,7 @@ fi
 
 original_dir="$(pwd)"
 
-source_tarball="/mnt/cache/$1.tar.gz"
+source_tarball="/mnt/cache/$1.tar"
 dest_dir="$2"
 
 if [ ! -d "$dest_dir" ]; then
@@ -37,6 +37,6 @@ echo "Cache hit."
 
 cd "$dest_dir"
 
-$SUPERUSER_COMMAND tar -zxf -I pigz "$source_tarball"
+$SUPERUSER_COMMAND tar -xf -I pigz "$source_tarball"
 
 cd "$original_dir"
