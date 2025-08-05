@@ -1,7 +1,42 @@
 [
 	{
+		"id": "4mbjam/update",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/4mbjam-webhook-update.sh",
+		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
+		"pass-environment-to-command": [
+			{
+				"source": "string",
+				"name": "/home/{{ getenv "RUNNER_USER" }}",
+				"envname": "HOME"
+			}
+		],
+		"pass-arguments-to-command": [
+			{
+				"source": "payload",
+				"name": "ref"
+			}
+		],
+		"trigger-rule": {
+			"and": [
+				{
+					"match": {
+						"type": "payload-hmac-sha1",
+						"secret": "{{ getenv "GITHUB_WEBHOOK_SECRET" }}",
+						"parameter": { "source": "header", "name": "X-Hub-Signature" }
+					}
+				},
+				{
+					"match": {
+						"type": "value", "value": "push",
+						"parameter": { "source": "header", "name": "X-GitHub-Event" }
+					}
+				}
+			]
+		}
+	},
+	{
 		"id": "pgetinker/wiki",
-		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/update-wiki.sh",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-webhook-update-wiki.sh",
 		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
 		"pass-environment-to-command": [
 			{
@@ -36,7 +71,7 @@
 	},
 	{
 		"id": "pgetinker/ci",
-		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-ci.sh",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-webhook-ci.sh",
 		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
 		"pass-environment-to-command": [
 			{
@@ -93,7 +128,7 @@
 	},
 	{
 		"id": "pgetinker/update",
-		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-update.sh",
+		"execute-command": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}/pgetinker-webhook-update.sh",
 		"command-working-directory": "{{ getenv "WEBHOOK_BASE_DIRECTORY" }}",
 		"pass-environment-to-command": [
 			{

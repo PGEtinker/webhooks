@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-exec >> pgetinker-update.log 2>&1
+exec >> logs/pgetinker-wiki.log 2>&1
 
 source common.sh
 
@@ -20,3 +20,6 @@ log "## Done."
 log "#### Generate wiki on pgetinker.main."
 scripts/pgetinker restart wiki
 log "## Done."
+
+# remove ansi color escape codes
+sed -i 's/\x1B\[[0-9;]*[a-zA-Z]//g' logs/pgetinker-wiki.log

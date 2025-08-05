@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-exec >> pgetinker-ci.log 2>&1
+exec >> logs/pgetinker-ci.log 2>&1
 
 source common.sh
 
@@ -53,4 +53,4 @@ if [ "completed" == "$ACTION" ]; then
 fi
 
 # remove ansi color escape codes
-sed -i 's/\x1B\[[0-9;]*[a-zA-Z]//g' pgetinker-ci.log
+sed -i 's/\x1B\[[0-9;]*[a-zA-Z]//g' logs/pgetinker-ci.log
