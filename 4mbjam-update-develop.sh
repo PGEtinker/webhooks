@@ -11,7 +11,7 @@ log "#### Pull latest repo"
 log "## Done."
 
 log "#### Build with Zola"
-(cd website; zola build --base-url /)
+(cd website; zola build --base-url https://next.4mbjam.dev)
 log "## Done."
 
 log "#### Spin up 4mbjam.next."
