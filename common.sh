@@ -81,3 +81,24 @@ npm_update_host() {
     
     return 0
 }
+
+
+send_email_notification() {
+    
+    local recipient="$1"
+    shift 1
+    local subject="$1"
+    shift 1
+    local body="$@"
+    echo "$recipient"
+    echo "$subject"
+    echo
+    echo "$body"
+
+    curl --ssl-reqd "smtp://$EMAIL_SMTP_SERVER" \
+        --mail-from "$EMAIL_FROM" \
+        --mail-rcpt "$recipient" \
+        --user "$EMAIL_USERNAME:$EMAIL_PASSWORD" \
+        -T <(echo -e "From: $EMAIL_FROM\nTo: $recipient\nSubject: $subject\n\n$body")
+}
+
