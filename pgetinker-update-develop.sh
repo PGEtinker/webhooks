@@ -32,6 +32,10 @@ log "#### Spin up pgetinker.next."
 scripts/pgetinker up -d
 log "## Done."
 
+log "#### Run database conforming script."
+scripts/pgetinker artisan app:conform-database
+log "## Done."
+
 log "#### Switch next.pgetinker.com proxy host to http://pgetinker.next:80."
 npm_update_host "next.pgetinker.com" "http" "pgetinker.next" "80"
 if [ ! $? -eq 0 ]; then
@@ -43,4 +47,8 @@ log "## Done."
 log "#### Spin down maintenance page."
 cd "$APPS_BASE_DIRECTORY/pgetinker-maintenance"
 docker compose down
+log "## Done."
+
+log "#### Sending email notification"
+send_email_notification "$EMAIL_NOTIFY_ADDRESS" "PGEtinker Next Updated!" "PGEtinker Next has been updated."
 log "## Done."
