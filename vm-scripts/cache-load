@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-exit 0
-
 SUPERUSER_COMMAND=""
 
 if [[ $EUID -ne 0 ]]; then
