@@ -26,7 +26,7 @@ write_files:
   - path: /start-runner.sh
     content: |
       #!/usr/bin/bash
-      cd /actions-runner
+      cd /gha-runner
       ./config.sh --url "https://github.com/$REPO_FULLNAME" --token "$RUNNER_TOKEN" --name "ed-$NEW_VMID" --ephemeral --unattended
       ./run.sh
     permissions: '0755'
