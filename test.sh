@@ -2,5 +2,6 @@
 
 source common.sh
 
-exit
+echo "$@"
 
+exit
